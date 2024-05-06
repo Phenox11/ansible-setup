@@ -12,3 +12,8 @@
           - eza
           - bat
           - neovim
+
+    - name: neovim
+      ansible.builtin.shell: 'curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz'
+      ansible.builtin.shell: 'sudo rm -rf /opt/nvim'
+      ansible.builtin.shell: 'sudo tar -C /opt -xzf nvim-linux64.tar.gz'
