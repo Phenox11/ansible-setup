@@ -8,4 +8,4 @@
         state: present
         name:
           - tcsh
-         - htop
+          - htop
