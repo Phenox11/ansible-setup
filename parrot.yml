@@ -8,7 +8,6 @@
         state: present
         name:
           - alacritty
-          - zellij
           - eza
           - bat
           - neovim
