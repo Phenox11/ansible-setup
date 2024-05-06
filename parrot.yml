@@ -11,4 +11,4 @@
         - zellij
         - eza
         - bat
-      state = present
+      state: present
