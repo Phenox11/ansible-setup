@@ -11,6 +11,7 @@
           - exa
           - bat
           - neovim
+          - ripgrep
 
     - name: neovim
       ansible.builtin.shell: |
