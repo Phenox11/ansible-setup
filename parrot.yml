@@ -21,7 +21,7 @@
     
     - name: Remove existing neovim config directory
       ansible.builtin.file:
-        path: /root/.config/nvim
+        path: ~/.config/nvim
         state: absent
 
     - name: Clone neovim configuration
