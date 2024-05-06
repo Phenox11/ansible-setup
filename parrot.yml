@@ -18,3 +18,9 @@
         sudo rm -rf /opt/nvim
         sudo tar -C /opt -xzf nvim-linux64.tar.gz
         export PATH="$PATH:/opt/nvim-linux64/bin"
+    
+    - name: neovim-config
+      ansible.builtin.shell: |
+        cmd: git clone https://github.com/Phenox11/nvim.git
+        chdir: ~/.config/
+
