@@ -4,7 +4,7 @@
 
   tasks:
 
-    - name: Install packages
+    - name: Install required packages
       apt:
         state: present
         name:
@@ -13,6 +13,7 @@
           - bat
           - neovim
           - ripgrep
+          - git
 
     - name: Install Neovim
       block:
@@ -25,12 +26,11 @@
             creates: /opt/nvim-linux64
 
         - name: Add Neovim to PATH
-          become: true
           lineinfile:
             path: /etc/environment
             line: 'PATH="/opt/nvim-linux64/bin:$PATH"'
 
-      become: true
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     - name: Remove existing neovim config directory
       file:
