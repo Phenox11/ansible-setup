@@ -30,14 +30,13 @@
             path: /etc/environment
             line: 'PATH="/opt/nvim-linux64/bin:$PATH"'
 
-      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
-    - name: Remove existing neovim config directory
-      file:
-        path: ~/.config/nvim
-        state: absent
+        - name: Remove existing neovim config directory
+          file:
+            path: ~/.config/nvim
+            state: absent
 
-    - name: Clone neovim configuration
-      git:
-        repo: https://github.com/Phenox11/nvim.git
-        dest: ~/.config/nvim
+        - name: Clone neovim configuration
+          git:
+            repo: https://github.com/Phenox11/nvim.git
+            dest: ~/.config/nvim
