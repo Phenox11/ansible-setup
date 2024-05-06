@@ -5,21 +5,25 @@
       become: true
       become_user: root
       apt:
-        state: present
         name:
           - alacritty
           - exa
           - bat
           - neovim
           - ripgrep
+        state: present
 
-    - name: neovim
+    - name: Set environment variable for Neovim
+      ansible.builtin.shell: export PATH="$PATH:/opt/nvim-linux64/bin"
+      environment:
+        PATH: "{{ ansible_env.PATH }}:/opt/nvim-linux64/bin"
+
+    - name: Download and extract Neovim
       ansible.builtin.shell: |
         curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
         sudo rm -rf /opt/nvim
         sudo tar -C /opt -xzf nvim-linux64.tar.gz
-        export PATH="$PATH:/opt/nvim-linux64/bin"
-    
+
     - name: Remove existing neovim config directory
       ansible.builtin.file:
         path: ~/.config/nvim
