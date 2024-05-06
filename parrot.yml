@@ -7,5 +7,8 @@
       apt:
         state: present
         name:
-          - tcsh
-          - htop
+          - alacritty
+          - zellij
+          - eza
+          - bat
+          - neovim
