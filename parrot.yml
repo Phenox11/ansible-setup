@@ -1,35 +1,43 @@
 ---
 - hosts: localhost
+  become: true
+
   tasks:
-    - name: install packages
-      become: true
-      become_user: root
+
+    - name: Install packages
       apt:
+        state: present
         name:
           - alacritty
           - exa
           - bat
           - neovim
           - ripgrep
-        state: present
 
-    - name: Set environment variable for Neovim
-      ansible.builtin.shell: export PATH="$PATH:/opt/nvim-linux64/bin"
-      environment:
-        PATH: "{{ ansible_env.PATH }}:/opt/nvim-linux64/bin"
+    - name: Install Neovim
+      block:
 
-    - name: Download and extract Neovim
-      ansible.builtin.shell: |
-        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-        sudo rm -rf /opt/nvim
-        sudo tar -C /opt -xzf nvim-linux64.tar.gz
+        - name: Download Neovim
+          unarchive:
+            src: https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+            dest: /opt
+            remote_src: yes
+            creates: /opt/nvim-linux64
+
+        - name: Add Neovim to PATH
+          become: true
+          lineinfile:
+            path: /etc/environment
+            line: 'PATH="/opt/nvim-linux64/bin:$PATH"'
+
+      become: true
 
     - name: Remove existing neovim config directory
-      ansible.builtin.file:
+      file:
         path: ~/.config/nvim
         state: absent
 
     - name: Clone neovim configuration
-      ansible.builtin.shell:
-        cmd: git clone https://github.com/Phenox11/nvim.git ~/.config/nvim
-
+      git:
+        repo: https://github.com/Phenox11/nvim.git
+        dest: ~/.config/nvim
